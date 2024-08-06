@@ -2,6 +2,7 @@ package model;
 public class Cliente {
     protected String id ;
     protected String nome;
+    protected String email;
     protected String cpf;
     protected String cpfCnpj;
     protected String telefone;
@@ -17,12 +18,14 @@ public class Cliente {
         super();
         this.id = id;
         this.nome = nome;
+        this.email = email;
         this.cpf = cpf;
         this.cpfCnpj = cpfCnpj;
         this.telefone = telefone;
         this.endereco = endereco;
     }
 
+    
     public String getId() {
         return id;
     }
@@ -39,6 +42,14 @@ public class Cliente {
         this.nome = nome;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
     public String getCpf() {
         return cpf;
     }
