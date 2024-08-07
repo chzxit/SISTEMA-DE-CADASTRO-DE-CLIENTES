@@ -1,5 +1,6 @@
 package view;
 
+import controller.Criptografia;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -91,13 +92,23 @@ public class JLogin extends JFrame{
         //evento de click no botao
         bntNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
+                Criptografia criptografia = new Criptografia(passwordField.getText(), Criptografia.MD5);
+                System.out.println(criptografia.criptografar());
                 //usado para testar se tem alguma iformaçao nesse campo
                 //vai verificar se ele e diferente de nulo
                 //tambem ira verificar se o campo de esta vazio
                 //tambem ira verificar se a password e diferente de nulo e se o campo dela esta vazio
                 //! usado para negar 
                 if (textFieldUsuario.getText() != null && !textFieldUsuario.getText().isEmpty() && passwordField.getText() != null && !passwordField.getText().isEmpty()) {
+                    if(criptografia.criptografar().equals("E10ADC3949BAS9ABBE566057F20F883E")){
+
+                    }
                     JOptionPane.showMessageDialog(bntNewButton, "Login concluido com sucesso!");
+                    dispose();
+                    JPrincipal jPrincipal = new JPrincipal();
+                    jPrincipal.setLocationRelativeTo(jPrincipal);
+                    jPrincipal.setVisible(true);
+                    
                 }else{
                     JOptionPane.showMessageDialog(bntNewButton, "Informações incorretas", "Aviso",JOptionPane.WARNING_MESSAGE);
                 }

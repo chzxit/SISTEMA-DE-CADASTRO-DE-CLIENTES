@@ -7,7 +7,7 @@ import javax.swing.table.AbstractTableModel;
 public class ModeloTabela  extends  AbstractTableModel {
 
     private static final String[] colunas = {
-        "10", "CPF/CNPJ", "Nome", "E-mail", "Telefone", "Endereço"
+        "ID", "Nome", "E-mail","CPF/CNPJ", "Telefone", "Endereço"
     };
     private ArrayList<Cliente> clientes;
 
@@ -32,7 +32,6 @@ public class ModeloTabela  extends  AbstractTableModel {
 
         if(columIndex == 0 ){
             return cliente.getId();
-
         } else if(columIndex == 1){
                 return cliente.getNome();
         } else if (columIndex == 2) {
@@ -50,5 +49,10 @@ public class ModeloTabela  extends  AbstractTableModel {
         }
     }
 
+    @Override
+    public String getColumnName(int column) {
+        return colunas[column];
+    }
+    
     
 }
