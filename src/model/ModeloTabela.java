@@ -37,12 +37,10 @@ public class ModeloTabela  extends  AbstractTableModel {
         } else if (columIndex == 2) {
             return cliente.getEmail();
         } else if(columIndex == 3){
-                return cliente.getCpf();
-        } else if(columIndex == 4){
                 return cliente.getCpfCnpj();
-        } else if(columIndex == 5){
+        } else if(columIndex == 4){
                 return cliente.getTelefone();
-        } else if(columIndex == 6){
+        } else if(columIndex == 5){
                 return cliente.getEndereco();
         } else{
         return  null;

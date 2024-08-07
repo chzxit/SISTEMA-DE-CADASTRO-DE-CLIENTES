@@ -3,7 +3,6 @@ public class Cliente {
     protected String id ;
     protected String nome;
     protected String email;
-    protected String cpf;
     protected String cpfCnpj;
     protected String telefone;
     protected String endereco;
@@ -14,12 +13,11 @@ public class Cliente {
 
    
 
-    public Cliente(String id, String nome, String email,String cpf, String cpfCnpj, String telefone, String endereco){
+    public Cliente(String id, String nome, String email, String cpfCnpj, String telefone, String endereco){
         super();
         this.id = id;
         this.nome = nome;
         this.email = email;
-        this.cpf = cpf;
         this.cpfCnpj = cpfCnpj;
         this.telefone = telefone;
         this.endereco = endereco;
@@ -50,15 +48,6 @@ public class Cliente {
         this.email = email;
     }
     
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-
     public String getCpfCnpj() {
         return cpfCnpj;
     }

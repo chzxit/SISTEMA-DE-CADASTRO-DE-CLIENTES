@@ -36,8 +36,8 @@ public class JPrincipal extends JFrame{
     public JPrincipal() {
 
 clientes = new ArrayList<>();
-clientes.add(new Cliente("1","Caio","Caio00798@gmail.com","456.789.012-34","12.345.678/0001-90","(11) 91234-5678","Nao informado"));
-clientes.add(new Cliente("2","Daniela","Dani00932@hmail.com","567.890.123-45","6.789.012/0001-34","(21) 99876-5432","Nao informado"));
+clientes.add(new Cliente("1","Caio","Caio00798@gmail.com","456.789.012-34","(11) 91234-5678","Nao informado"));
+clientes.add(new Cliente("2","Daniela","Dani00932@hmail.com","567.890.123-45","(21) 99876-5432","Nao informado"));
 
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     //tamnho da tela que ira aparecer para os usuarios.
