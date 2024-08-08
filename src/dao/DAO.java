@@ -1,5 +1,4 @@
 package dao;
-
 import controller.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,19 +14,25 @@ public class DAO {
     private static String DRIVER = "org.sqlite.JDBC";
     private static String BD = "jdbc:sqlite:resources/bdcliente.db";
 
+
     private static String CADASTRAR_CLIENTE = " INSERT INTO CLIENTE " +" (ID, NOME, CPF/CPNJ, EMAIL, TELEFONE, ENDERECO ) "
     +"VALUES(NULL,?,?,?,?,?)";
 
+
     private static String CONSULTA_CLIENTE = " SELECT * FROM CLIENTE " + " WHERE ID = ? ";
+
       
     private static String ALTERAR_CLIENTE = " INSERT INTO CLIENTE " +" ( NOME =? , CPF/CPNJ = ?, EMAIL = ?, TELEFONE = ?, ENDERECO = ?) "
     +" WHERE ID = ? ";
 
+
     private static String EXCLUIR_CLIENTE = " INSERT INTO CLIENTE " +" ( NOME =? , CPF/CPNJ = ?, EMAIL = ?, TELEFONE = ?, ENDERECO = ?) "
     +" WHERE ID = ? ";
 
+
     private static String LISTAR_CLIENTE = " INSERT INTO CLIENTE " +" ( NOME =? , CPF/CPNJ = ?, EMAIL = ?, TELEFONE = ?, ENDERECO = ?) "
     +" WHERE 1 = 1 ";
+
 
     private static String CONSULTAR_USUARIO = " SELECT USUARIO " + " FROM USUARIO "
     +"WHERE USUARIO + ?" + "SND SENHA + ?";
