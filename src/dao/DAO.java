@@ -112,15 +112,6 @@ public class DAO {
 
 
 
-
-
-
-
-
-
-
-
-
 private void fecharConexao(){
     try{
     if(resultSet!= null){
