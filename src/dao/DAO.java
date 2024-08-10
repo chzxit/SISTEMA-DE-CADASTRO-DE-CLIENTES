@@ -1,9 +1,11 @@
 package dao;
+
 import controller.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import model.Cliente;
 
@@ -14,48 +16,45 @@ public class DAO {
     private static String DRIVER = "org.sqlite.JDBC";
     private static String BD = "jdbc:sqlite:resources/bdcliente.db";
 
-
-    private static String CADASTRAR_CLIENTE = " INSERT INTO CLIENTE " +" (ID, NOME, CPF/CPNJ, EMAIL, TELEFONE, ENDERECO ) "
-    +"VALUES(NULL,?,?,?,?,?)";
-
+    private static String CADASTRAR_CLIENTE = " INSERT INTO CLIENTE "
+            + " (ID, NOME, CPF/CPNJ, EMAIL, TELEFONE, ENDERECO ) "
+            + "VALUES(NULL,?,?,?,?,?)";
 
     private static String CONSULTA_CLIENTE = " SELECT * FROM CLIENTE " + " WHERE ID = ? ";
 
-      
-    private static String ALTERAR_CLIENTE = " INSERT INTO CLIENTE " +" ( NOME =? , CPF/CPNJ = ?, EMAIL = ?, TELEFONE = ?, ENDERECO = ?) "
-    +" WHERE ID = ? ";
+    private static String ALTERAR_CLIENTE = " INSERT INTO CLIENTE "
+            + " ( NOME =? , CPF/CPNJ = ?, EMAIL = ?, TELEFONE = ?, ENDERECO = ?) "
+            + " WHERE ID = ? ";
 
+    private static String EXCLUIR_CLIENTE = " INSERT INTO CLIENTE "
+            + " ( NOME =? , CPF/CPNJ = ?, EMAIL = ?, TELEFONE = ?, ENDERECO = ?) "
+            + " WHERE ID = ? ";
 
-    private static String EXCLUIR_CLIENTE = " INSERT INTO CLIENTE " +" ( NOME =? , CPF/CPNJ = ?, EMAIL = ?, TELEFONE = ?, ENDERECO = ?) "
-    +" WHERE ID = ? ";
-
-
-    private static String LISTAR_CLIENTE = " INSERT INTO CLIENTE " +" ( NOME =? , CPF/CPNJ = ?, EMAIL = ?, TELEFONE = ?, ENDERECO = ?) "
-    +" WHERE 1 = 1 ";
-
+    private static String LISTAR_CLIENTE = " INSERT INTO CLIENTE "
+            + " ( NOME =? , CPF/CPNJ = ?, EMAIL = ?, TELEFONE = ?, ENDERECO = ?) "
+            + " WHERE 1 = 1 ";
 
     private static String CONSULTAR_USUARIO = " SELECT USUARIO " + " FROM USUARIO "
-    +"WHERE USUARIO + ?" + "SND SENHA + ?";
+            + "WHERE USUARIO + ?" + "SND SENHA + ?";
 
-
-    public DAO(){
+    public DAO() {
 
     }
 
-    public void cadastrarCliente(Cliente cliente){
-    Connection connection = Conexao.getInstancia().abrirConexao();
+    public void cadastrarCliente(Cliente cliente) {
+        Connection connection = Conexao.getInstancia().abrirConexao();
 
-    String query = CADASTRAR_CLIENTE;
+        String query = CADASTRAR_CLIENTE;
         try {
             preparedStatement = connection.prepareStatement(query);
 
-            int i = 0;
-            //ID, NOME, CPF/CPNJ, EMAIL, TELEFONE, ENDERECO
-            preparedStatement.setString(i ++, cliente.getNome());
-            preparedStatement.setString(i ++, cliente.getCpfCnpj());
-            preparedStatement.setString(i ++, cliente.getEmail());
-            preparedStatement.setString(i ++, cliente.getTelefone());
-            preparedStatement.setString(i ++, cliente.getEndereco());
+            int i = 1;
+            // ID, NOME, CPF/CPNJ, EMAIL, TELEFONE, ENDERECO
+            preparedStatement.setString(i++, cliente.getNome());
+            preparedStatement.setString(i++, cliente.getCpfCnpj());
+            preparedStatement.setString(i++, cliente.getEmail());
+            preparedStatement.setString(i++, cliente.getTelefone());
+            preparedStatement.setString(i++, cliente.getEndereco());
 
             connection.commit();
             JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso ");
@@ -63,74 +62,164 @@ public class DAO {
         } catch (SQLException e) {
             e.printStackTrace();
 
-        }finally{
-            fecharConexao(); }
-
+        } finally {
+            fecharConexao();
         }
 
-       
-    
-    public Cliente consultarCliente(String id ) throws Exception{
+    }
+
+    public Cliente consultarCliente(String id) throws Exception {
         Connection connection = Conexao.getInstancia().abrirConexao();
-    
+
         String query = CADASTRAR_CLIENTE;
         Cliente cliente = null;
-            try {
-                preparedStatement = connection.prepareStatement(query);
-    
-                int i = 0;
-                //ID, NOME, CPF/CPNJ, EMAIL, TELEFONE, ENDERECO
-                preparedStatement.setString(i ++, id);
-               
-                resultSet = preparedStatement.executeQuery();
+        try {
+            preparedStatement = connection.prepareStatement(query);
 
-                while(resultSet.next()){
-                     //String id, String nome, String email, String cpfCnpj, String telefone, String endereco
-                    cliente = new Cliente(resultSet.getString("ID"),
-                                          resultSet.getString("nome"),
-                                          resultSet.getString("email"),  
-                                          resultSet.getString("cpfCnpj"),
-                                          resultSet.getString("telefone"),
-                                          resultSet.getString("endereco"));
+            int i = 1;
+            // ID, NOME, CPF/CPNJ, EMAIL, TELEFONE, ENDERECO
+            preparedStatement.setString(i++, id);
 
-                }
-             
-                
-            } catch (SQLException e) {
-                e.printStackTrace();
-    
-            }finally{
-                fecharConexao(); }
-    
-            { 
-            if(cliente == null){
+            resultSet = preparedStatement.executeQuery();
 
-                JOptionPane.showMessageDialog(null, "Nao foi possivel localizar o cliente selecionado", "" ,JOptionPane.WARNING_MESSAGE);
-                    throw new Exception("Nao foi possivel localizar o cliente selecionado");
+            while (resultSet.next()) {
+                // String id, String nome, String email, String cpfCnpj, String telefone, String
+                // endereco
+                cliente = new Cliente(resultSet.getString("ID"),
+                        resultSet.getString("nome"),
+                        resultSet.getString("email"),
+                        resultSet.getString("cpfCnpj"),
+                        resultSet.getString("telefone"),
+                        resultSet.getString("endereco"));
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            fecharConexao();
+        }
+
+        {
+            if (cliente == null) {
+
+                JOptionPane.showMessageDialog(null, "Nao foi possivel localizar o cliente selecionado", "",
+                        JOptionPane.WARNING_MESSAGE);
+                throw new Exception("Nao foi possivel localizar o cliente selecionado");
             }
             return cliente;
-}}
-
-
-
-
-
-
-
-private void fecharConexao(){
-    try{
-    if(resultSet!= null){
-    }
-    if (preparedStatement != null) {
-        preparedStatement.close();
+        }
     }
 
-    Conexao.getInstancia().fecharConexao();
+    public void alterarCliente(String id, Cliente cliente) {
+        Connection connection = Conexao.getInstancia().abrirConexao();
 
-} catch(SQLException e){
-    e.printStackTrace();
+        String query = ALTERAR_CLIENTE;
+        try {
+            preparedStatement = connection.prepareStatement(query);
+
+            int i = 1;
+            // ID, NOME, CPF/CPNJ, EMAIL, TELEFONE, ENDERECO
+            preparedStatement.setString(i++, cliente.getNome());
+            preparedStatement.setString(i++, cliente.getCpfCnpj());
+            preparedStatement.setString(i++, cliente.getEmail());
+            preparedStatement.setString(i++, cliente.getTelefone());
+            preparedStatement.setString(i++, cliente.getEndereco());
+            preparedStatement.setString(i++, id);
+
+            connection.commit();
+            preparedStatement.execute();
+            JOptionPane.showMessageDialog(null, "Cliente alterado com sucesso ");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            fecharConexao();
+        }
+
+    }
+
+    public void excluirCliente(String id) {
+        Connection connection = Conexao.getInstancia().abrirConexao();
+
+        String query = EXCLUIR_CLIENTE;
+        try {
+            preparedStatement = connection.prepareStatement(query);
+
+            int i = 1;
+
+            preparedStatement.setString(i++, id);
+
+            connection.commit();
+            preparedStatement.execute();
+            JOptionPane.showMessageDialog(null, "Cliente excluido com sucesso ");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            fecharConexao();
+        }
+
+    }
+
+    public ArrayList<Cliente> listarCliente() throws Exception {
+        Connection connection = Conexao.getInstancia().abrirConexao();
+        ArrayList<Cliente> clientes = new ArrayList<>();
+        String query = LISTAR_CLIENTE;
+        Cliente cliente = null;
+        try {
+            preparedStatement = connection.prepareStatement(query);
+
+          
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                // String id, String nome, String email, String cpfCnpj, String telefone, String
+                // endereco
+                clientes.add ( new Cliente(resultSet.getString("ID"),
+                        resultSet.getString("nome"),
+                        resultSet.getString("email"),
+                        resultSet.getString("cpfCnpj"),
+                        resultSet.getString("telefone"),
+                        resultSet.getString("endereco")));
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            fecharConexao();
+        }
+
+        {
+            if (clientes.size() < 0) {
+
+                JOptionPane.showMessageDialog(null, "Nao ha clientes cadastrados ", "",
+                        JOptionPane.WARNING_MESSAGE);
+                throw new Exception("Nao ha clientes cadastrados");
+            }
+            return clientes;
+        }
+    }
+
+    private void fecharConexao() {
+        try {
+            if (resultSet != null) {
+            }
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+
+            Conexao.getInstancia().fecharConexao();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
-} 
-
-
- }
