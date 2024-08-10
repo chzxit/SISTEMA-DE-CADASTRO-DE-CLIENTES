@@ -14,28 +14,21 @@ public class DAO {
     private static PreparedStatement preparedStatement = null;
     private static ResultSet resultSet = null;
 
-    private static String DRIVER = "org.sqlite.JDBC";
-    private static String BD = "jdbc:sqlite:resources/bdcliente.db";
-
     private static String CADASTRAR_CLIENTE = " INSERT INTO CLIENTE "
             + " (ID, NOME, CPF/CPNJ, EMAIL, TELEFONE, ENDERECO ) "
             + "VALUES(NULL,?,?,?,?,?)";
 
-    private static String CONSULTA_CLIENTE = " SELECT * FROM CLIENTE " + " WHERE ID = ? ";
+    private static String CONSULTAR_CLIENTE = " SELECT * FROM CLIENTE " + " WHERE ID = ? ";
 
-    private static String ALTERAR_CLIENTE = " INSERT INTO CLIENTE "
+    private static String ALTERAR_CLIENTE = " UPDATE CLIENTE SET "
             + " ( NOME =? , CPF/CPNJ = ?, EMAIL = ?, TELEFONE = ?, ENDERECO = ?) "
             + " WHERE ID = ? ";
 
-    private static String EXCLUIR_CLIENTE = " INSERT INTO CLIENTE "
-            + " ( NOME =? , CPF/CPNJ = ?, EMAIL = ?, TELEFONE = ?, ENDERECO = ?) "
-            + " WHERE ID = ? ";
+    private static String EXCLUIR_CLIENTE = " DELETE FROM CLIENTE " + " WHERE ID = ? ";
 
-    private static String LISTAR_CLIENTE = " INSERT INTO CLIENTE "
-            + " ( NOME =? , CPF/CPNJ = ?, EMAIL = ?, TELEFONE = ?, ENDERECO = ?) "
-            + " WHERE 1 = 1 ";
+    private static String LISTAR_CLIENTE = " SELECT * FROM CLIENTE "+ " WHERE 1 = 1 ";
 
-    private static String CONSULTAR_USUARIO = " SELECT USUARIO " + " FROM USUARIO "
+    private static String CONSULTAR_USUARIO = " SELECT USUARIO, SENHA " + " FROM USUARIO "
             + "WHERE USUARIO + ?" + "SND SENHA + ?";
 
     public DAO() {
@@ -72,7 +65,7 @@ public class DAO {
     public Cliente consultarCliente(String id) throws Exception {
         Connection connection = Conexao.getInstancia().abrirConexao();
 
-        String query = CADASTRAR_CLIENTE;
+        String query = CONSULTAR_CLIENTE;
         Cliente cliente = null;
         try {
             preparedStatement = connection.prepareStatement(query);
@@ -211,7 +204,7 @@ public class DAO {
     public Usuario consultarUsuario(String nomeUsuario, String senhaCriptografada) throws Exception {
         Connection connection = Conexao.getInstancia().abrirConexao();
 
-        String query = CONSULTA_CLIENTE;
+        String query = CONSULTAR_USUARIO;
         Usuario usuario = null;
         try {
             preparedStatement = connection.prepareStatement(query);
