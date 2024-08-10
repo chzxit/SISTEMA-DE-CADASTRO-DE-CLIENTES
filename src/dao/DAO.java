@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import model.Cliente;
+import model.Usuario;
 
 public class DAO {
     private static PreparedStatement preparedStatement = null;
@@ -204,6 +205,44 @@ public class DAO {
                 throw new Exception("Nao ha clientes cadastrados");
             }
             return clientes;
+        }
+    }
+
+    public Usuario consultarUsuario(String nomeUsuario, String senhaCriptografada) throws Exception {
+        Connection connection = Conexao.getInstancia().abrirConexao();
+
+        String query = CONSULTA_CLIENTE;
+        Usuario usuario = null;
+        try {
+            preparedStatement = connection.prepareStatement(query);
+
+            int i = 1;
+            
+            preparedStatement.setString(i++, nomeUsuario);
+            preparedStatement.setString(i++, senhaCriptografada);
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                usuario = new Usuario(resultSet.getInt("ID"),resultSet.getString("USUARIO"),resultSet.getString("SENHA"));
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            fecharConexao();
+        }
+
+        {
+            if (usuario == null) {
+
+                JOptionPane.showMessageDialog(null, "Nao foi possivel localizar o usuario selecionado", "",
+                        JOptionPane.WARNING_MESSAGE);
+                throw new Exception("Nao foi possivel localizar o usuario selecionado");
+            }
+            return usuario;
         }
     }
 
